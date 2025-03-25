@@ -25,7 +25,7 @@ public class DashboardController {
     @FXML private VBox sidePanel;
     @FXML private Label monthLabel;
     @FXML private Label monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel;
-    @FXML private Button prevMonthButton, resetMonthButton, nextMonthButton;
+    @FXML private Button resetMonthButton;
 
     // State
     private LocalDate selectedDate; // Tracks the selected date persistently
@@ -200,7 +200,7 @@ public class DashboardController {
      */
     private void logSelectedDate() {
         if (selectedDate != null) {
-            System.out.println("Selected Date: " + selectedDate.toString()); // Outputs YYYY-MM-DD
+            System.out.println("Selected Date: " + selectedDate); // Outputs YYYY-MM-DD
         } else {
             System.out.println("No date selected");
         }
