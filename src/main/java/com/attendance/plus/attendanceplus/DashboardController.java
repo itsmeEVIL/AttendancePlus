@@ -36,7 +36,10 @@ public class DashboardController {
     private Button prevMonthButton, resetMonthButton, nextMonthButton;
 
     private Button selectedButton;
-    private YearMonth currentYearMonth; // Track the displayed month/year
+    private YearMonth currentYearMonth;
+
+    private static final String DEFAULT_BG_COLOR = "-fx-pref-width: 55px; -fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;";
+    private static final String HIGHLIGHTED_BG_COLOR = "-fx-background-color: rgb(21, 133, 246); -fx-pref-width: 55px; -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;";
 
     @FXML
     public void initialize() {
@@ -53,7 +56,8 @@ public class DashboardController {
 
                 // Bind calendar height to mainPanel height minus the HBox containing monthLabel and buttons
                 calendar.prefHeightProperty().bind(mainPanel.heightProperty()
-                        .subtract(monthLabel.getParent().prefHeight(-1))); // Use parent HBox height
+                        .subtract(monthLabel.getParent().prefHeight(-1))
+                        .subtract(10)); // Extra buffer for padding
 
                 // Bind header label sizes
                 styleAndBindLabel(monLabel);
@@ -81,6 +85,11 @@ public class DashboardController {
     private void updateMonthLabel() {
         String monthName = currentYearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH).toUpperCase();
         monthLabel.setText(monthName + " " + currentYearMonth.getYear());
+    }
+
+    private void updateResetButtonStyle() {
+        boolean isCurrentMonth = currentYearMonth.equals(YearMonth.now());
+        resetMonthButton.setStyle(isCurrentMonth ? HIGHLIGHTED_BG_COLOR : DEFAULT_BG_COLOR);
     }
 
     private void populateCalendar() {
@@ -127,6 +136,9 @@ public class DashboardController {
                 day++;
             }
         }
+
+        // Update reset button style after populating
+        updateResetButtonStyle();
     }
 
     @FXML

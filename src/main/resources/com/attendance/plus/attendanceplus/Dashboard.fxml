@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -11,19 +12,38 @@
             <children>
                 <VBox fx:id="mainPanel" style="-fx-background-color: rgb(18, 18, 19);">
                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10">
+                        <HBox alignment="BASELINE_LEFT" spacing="8.0">
                             <children>
-                                <Label fx:id="monthLabel" text="MARCH 2025" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                <Label fx:id="monthLabel" text="MARCH 2025" textFill="WHITE">
                                     <font>
                                         <Font name="Inter Regular" size="36.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="prevMonthButton" text="◄" onAction="#handlePrevMonth" style="-fx-font-size: 18px;" />
-                                <Button fx:id="resetMonthButton" text="Today" onAction="#handleResetMonth" style="-fx-font-size: 18px;" />
-                                <Button fx:id="nextMonthButton" text="► " onAction="#handleNextMonth" style="-fx-font-size: 18px;" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="prevMonthButton" alignment="CENTER" contentDisplay="TOP" onAction="#handlePrevMonth" style="-fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;">
+                                    <graphic>
+                                        <ImageView fitWidth="8" fitHeight="11">
+                                            <Image url="@../../../../images/back.png" />
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="resetMonthButton" contentDisplay="TOP" onAction="#handleResetMonth" style="-fx-pref-width: 55px; -fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;">
+                                    <graphic>
+                                        <ImageView fitWidth="12" fitHeight="12">
+                                            <Image url="@../../../../images/current.png" />
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="nextMonthButton" contentDisplay="TOP" onAction="#handleNextMonth" style="-fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;">
+                                    <graphic>
+                                        <ImageView fitWidth="8" fitHeight="11">
+                                            <Image url="@../../../../images/forward.png" />
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
                             </children>
                             <padding>
-                                <Insets bottom="10.0" />
+                                <Insets bottom="15.0" />
                             </padding>
                         </HBox>
                         <GridPane fx:id="calendar" alignment="CENTER" hgap="8.0" style="-fx-background-color: rgb(18, 18, 19);" vgap="8.0">
