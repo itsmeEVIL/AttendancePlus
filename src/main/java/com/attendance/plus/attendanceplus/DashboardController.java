@@ -28,7 +28,7 @@ public class DashboardController {
     @FXML private Button prevMonthButton, resetMonthButton, nextMonthButton;
 
     // State
-    private Button selectedDayButton;
+    private LocalDate selectedDate; // Tracks the selected date persistently
     private YearMonth currentYearMonth;
 
     // Constants
@@ -50,8 +50,10 @@ public class DashboardController {
     public void initialize() {
         setupBindings();
         currentYearMonth = YearMonth.of(2025, 3); // Initial month
+        selectedDate = LocalDate.now(); // Default to today
         updateMonthLabel();
         populateCalendar();
+        logSelectedDate();
     }
 
     /**
@@ -109,7 +111,7 @@ public class DashboardController {
     }
 
     /**
-     * Updates the reset button's background based on whether the current month is displayed.
+     * Updates the reset button's style based on whether the current month is displayed.
      */
     private void updateResetButtonStyle() {
         resetMonthButton.setStyle(currentYearMonth.equals(YearMonth.now()) ? HIGHLIGHTED_NAV_STYLE : DEFAULT_NAV_STYLE);
@@ -128,7 +130,6 @@ public class DashboardController {
         int daysInMonth = currentYearMonth.lengthOfMonth();
         int startDay = firstOfMonth.getDayOfWeek().getValue() - 1; // Monday = 0
 
-        selectedDayButton = null;
         int day = 1;
         for (int row = FIRST_DATE_ROW; row < CALENDAR_ROWS && day <= daysInMonth; row++) {
             for (int col = 0; col < CALENDAR_COLS && day <= daysInMonth; col++) {
@@ -137,6 +138,12 @@ public class DashboardController {
                 }
                 Button dayButton = createDayButton(day, currentDay);
                 calendar.add(dayButton, col, row);
+                // Highlight if this matches the selected date
+                if (selectedDate != null && selectedDate.getYear() == currentYearMonth.getYear() &&
+                        selectedDate.getMonthValue() == currentYearMonth.getMonthValue() &&
+                        selectedDate.getDayOfMonth() == day) {
+                    dayButton.setStyle(HIGHLIGHTED_DAY_STYLE);
+                }
                 day++;
             }
         }
@@ -154,25 +161,45 @@ public class DashboardController {
         Button dayButton = new Button(String.valueOf(day));
         dayButton.prefWidthProperty().bind(calendar.widthProperty().divide(CALENDAR_COLS));
         dayButton.prefHeightProperty().bind(calendar.heightProperty().divide(CALENDAR_ROWS));
-        dayButton.setStyle(day == currentDay && selectedDayButton == null ? HIGHLIGHTED_DAY_STYLE : DEFAULT_DAY_STYLE);
+        dayButton.setStyle(DEFAULT_DAY_STYLE);
 
-        if (day == currentDay && selectedDayButton == null) {
-            selectedDayButton = dayButton;
+        // Initial highlight for today if no selection yet
+        if (day == currentDay && selectedDate == null) {
+            selectedDate = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), day);
+            dayButton.setStyle(HIGHLIGHTED_DAY_STYLE);
         }
 
-        dayButton.setOnAction(event -> handleDaySelection(dayButton));
+        dayButton.setOnAction(event -> handleDaySelection(day, dayButton));
         return dayButton;
     }
 
     /**
-     * Handles day button selection, updating the highlight.
+     * Handles day button selection, updating the selected date and highlight.
      */
-    private void handleDaySelection(Button dayButton) {
-        if (selectedDayButton != null && selectedDayButton != dayButton) {
-            selectedDayButton.setStyle(DEFAULT_DAY_STYLE);
-        }
+    private void handleDaySelection(int day, Button dayButton) {
+        // Update selected date
+        selectedDate = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), day);
+
+        // Update UI: unhighlight previous selection, highlight new selection
+        calendar.getChildren().forEach(node -> {
+            if (node instanceof Button && GridPane.getRowIndex(node) >= FIRST_DATE_ROW) {
+                node.setStyle(DEFAULT_DAY_STYLE);
+            }
+        });
         dayButton.setStyle(HIGHLIGHTED_DAY_STYLE);
-        selectedDayButton = dayButton;
+
+        logSelectedDate();
+    }
+
+    /**
+     * Logs the currently selected date to the console.
+     */
+    private void logSelectedDate() {
+        if (selectedDate != null) {
+            System.out.println("Selected Date: " + selectedDate.toString()); // Outputs YYYY-MM-DD
+        } else {
+            System.out.println("No date selected");
+        }
     }
 
     /**
@@ -191,8 +218,10 @@ public class DashboardController {
     @FXML
     private void handleResetMonth() {
         currentYearMonth = YearMonth.now();
+        selectedDate = LocalDate.now(); // Reset selected date to today
         updateMonthLabel();
         populateCalendar();
+        logSelectedDate(); // Log the new selected date
     }
 
     @FXML
