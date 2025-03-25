@@ -67,7 +67,7 @@
                         </HBox>
 
                         <!-- Calendar grid -->
-                        <GridPane fx:id="calendar" alignment="CENTER" hgap="8.0" vgap="8.0">
+                        <GridPane fx:id="calendar" alignment="TOP_CENTER" hgap="8.0" vgap="8.0">
                             <!-- Day of week headers -->
                             <Label fx:id="monLabel" text="Mon" alignment="CENTER" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <Label fx:id="tueLabel" text="Tue" alignment="CENTER" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -79,7 +79,7 @@
 
                             <!-- Grid constraints -->
                             <columnConstraints>
-                                <ColumnConstraints percentWidth="14.28" /> <!-- 100% / 7 -->
+                                <ColumnConstraints percentWidth="14.28" />
                                 <ColumnConstraints percentWidth="14.28" />
                                 <ColumnConstraints percentWidth="14.28" />
                                 <ColumnConstraints percentWidth="14.28" />
@@ -89,7 +89,7 @@
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints /> <!-- Header row -->
-                                <RowConstraints maxHeight="8" /> <!-- Gap row -->
+                                <RowConstraints maxHeight="8.0" /> <!-- Gap row -->
                                 <RowConstraints /> <!-- Date row 1 -->
                                 <RowConstraints /> <!-- Date row 2 -->
                                 <RowConstraints /> <!-- Date row 3 -->
