@@ -32,11 +32,6 @@ public class DashboardController {
     private YearMonth currentYearMonth;
 
     // Constants
-    private static final String DEFAULT_DAY_STYLE = "-fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-text-fill: #fff; -fx-font: 18px 'Inter'; -fx-cursor: hand; -fx-background-radius: 6px;";
-    private static final String HIGHLIGHTED_DAY_STYLE = "-fx-background-color: rgb(21, 133, 246); -fx-border-width: 0; -fx-text-fill: #fff; -fx-font: 18px 'Inter'; -fx-cursor: hand; -fx-background-radius: 6px;";
-    private static final String HEADER_STYLE = "-fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-text-fill: #B5B5B5; -fx-font: 18px 'Inter'; -fx-background-radius: 6px;";
-    private static final String DEFAULT_NAV_STYLE = "-fx-pref-width: 55px; -fx-background-color: rgb(37, 37, 37); -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;";
-    private static final String HIGHLIGHTED_NAV_STYLE = "-fx-pref-width: 55px; -fx-background-color: rgb(21, 133, 246); -fx-border-width: 0; -fx-font-size: 20px; -fx-cursor: hand; -fx-background-radius: 6px;";
     private static final double TOP_BAR_HEIGHT_RATIO = 0.15;
     private static final double MAIN_PANEL_WIDTH_RATIO = 0.65;
     private static final int CALENDAR_ROWS = 8;
@@ -53,6 +48,7 @@ public class DashboardController {
         selectedDate = LocalDate.now(); // Default to today
         updateMonthLabel();
         populateCalendar();
+        updateResetButtonStyle(); // Ensure this runs after setting currentYearMonth
         logSelectedDate();
     }
 
@@ -89,17 +85,16 @@ public class DashboardController {
     private void bindHeaderLabels() {
         Label[] headers = {monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel};
         for (Label header : headers) {
-            styleAndBindLabel(header);
+            bindLabel(header);
         }
     }
 
     /**
-     * Applies size bindings and style to a label.
+     * Applies size bindings to a label.
      */
-    private void styleAndBindLabel(Label label) {
+    private void bindLabel(Label label) {
         label.prefWidthProperty().bind(calendar.widthProperty().divide(CALENDAR_COLS));
         label.prefHeightProperty().bind(calendar.heightProperty().divide(CALENDAR_ROWS));
-        label.setStyle(HEADER_STYLE);
     }
 
     /**
@@ -114,7 +109,10 @@ public class DashboardController {
      * Updates the reset button's style based on whether the current month is displayed.
      */
     private void updateResetButtonStyle() {
-        resetMonthButton.setStyle(currentYearMonth.equals(YearMonth.now()) ? HIGHLIGHTED_NAV_STYLE : DEFAULT_NAV_STYLE);
+        resetMonthButton.getStyleClass().removeAll("nav-button-default", "nav-button-highlighted");
+        resetMonthButton.getStyleClass().add(
+                currentYearMonth.equals(YearMonth.now()) ? "nav-button-highlighted" : "nav-button-default"
+        );
     }
 
     /**
@@ -142,7 +140,8 @@ public class DashboardController {
                 if (selectedDate != null && selectedDate.getYear() == currentYearMonth.getYear() &&
                         selectedDate.getMonthValue() == currentYearMonth.getMonthValue() &&
                         selectedDate.getDayOfMonth() == day) {
-                    dayButton.setStyle(HIGHLIGHTED_DAY_STYLE);
+                    dayButton.getStyleClass().remove("calendarDayDefault");
+                    dayButton.getStyleClass().add("calendarDaySelected");
                 }
                 day++;
             }
@@ -161,12 +160,13 @@ public class DashboardController {
         Button dayButton = new Button(String.valueOf(day));
         dayButton.prefWidthProperty().bind(calendar.widthProperty().divide(CALENDAR_COLS));
         dayButton.prefHeightProperty().bind(calendar.heightProperty().divide(CALENDAR_ROWS));
-        dayButton.setStyle(DEFAULT_DAY_STYLE);
+        dayButton.getStyleClass().add("calendarDayDefault");
 
         // Initial highlight for today if no selection yet
         if (day == currentDay && selectedDate == null) {
             selectedDate = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), day);
-            dayButton.setStyle(HIGHLIGHTED_DAY_STYLE);
+            dayButton.getStyleClass().remove("calendarDayDefault");
+            dayButton.getStyleClass().add("calendarDaySelected");
         }
 
         dayButton.setOnAction(event -> handleDaySelection(day, dayButton));
@@ -183,10 +183,14 @@ public class DashboardController {
         // Update UI: unhighlight previous selection, highlight new selection
         calendar.getChildren().forEach(node -> {
             if (node instanceof Button && GridPane.getRowIndex(node) >= FIRST_DATE_ROW) {
-                node.setStyle(DEFAULT_DAY_STYLE);
+                node.getStyleClass().remove("calendarDaySelected");
+                if (!node.getStyleClass().contains("calendarDayDefault")) {
+                    node.getStyleClass().add("calendarDayDefault");
+                }
             }
         });
-        dayButton.setStyle(HIGHLIGHTED_DAY_STYLE);
+        dayButton.getStyleClass().remove("calendarDayDefault");
+        dayButton.getStyleClass().add("calendarDaySelected");
 
         logSelectedDate();
     }
