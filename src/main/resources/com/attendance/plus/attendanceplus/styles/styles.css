@@ -108,6 +108,71 @@
     -fx-background-color: rgb(34, 35, 36);
 }
 
+/* Subject panel */
+.subject-title {
+    -fx-font-family: "Inter-ExtraBold";
+    -fx-font-size: 32px;
+}
+
+.subject-date {
+    -fx-font-family: "Inter-ExtraBold";
+    -fx-font-size: 20px;
+}
+
+.subject-card {
+    -fx-background-color: #414244;
+    -fx-background-radius: 6px;
+}
+
+.subject-info {
+    -fx-font-family: "Inter-Bold";
+    -fx-font-size: 12px;
+}
+
+.subject-name {
+    -fx-font-family: "Inter-ExtraBold";
+    -fx-font-size: 18px;
+}
+
+.attend-button {
+    -fx-font-family: "Inter-Bold";
+    -fx-font-size: 13px;
+    -fx-background-color: #1585F6;
+    -fx-text-fill: #fff;
+    -fx-border-width: 0;
+    -fx-background-radius: 6px;
+    -fx-min-width: 80px;
+    -fx-pref-height: 115px;
+    -fx-cursor: hand;
+}
+
+.attend-button-marked {
+    -fx-font-family: "Inter-Bold";
+    -fx-font-size: 13px;
+    -fx-background-color: #86FF80;
+    -fx-text-fill: #000;
+    -fx-border-width: 0;
+    -fx-background-radius: 6px;
+    -fx-min-width: 80px;
+    -fx-pref-height: 115px;
+    -fx-cursor: hand; /* Changed from none for consistency */
+}
+
+.subject-stats {
+    -fx-background-color: rgb(48, 50, 52);
+}
+
+.stats-label {
+    -fx-font-family: "Inter-Bold";
+    -fx-font-size: 12px;
+    -fx-text-fill: #D7D7D7;
+}
+
+.stats-value {
+    -fx-font-family: "Inter-Bold";
+    -fx-font-size: 18px;
+}
+
 /* Login screen styles */
 .login-field {
     -fx-font-size: 16px;
