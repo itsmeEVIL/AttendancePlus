@@ -5,96 +5,103 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.attendance.plus.attendanceplus.DashboardController">
+<VBox alignment="CENTER" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.attendance.plus.attendanceplus.DashboardController">
     <!-- Top bar section -->
-    <HBox fx:id="topBar" alignment="TOP_CENTER"/>
+    <HBox fx:id="topBar" alignment="CENTER_LEFT">
+        <padding>
+            <Insets left="40.0" right="40.0"/>
+        </padding>
+        <Label style="-fx-text-fill: rgb(21, 133, 246); -fx-font-size: 24px;" styleClass="inter-bold"
+               text="Attendance+"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="remindersButton" mnemonicParsing="false">
+            <graphic>
+                <ImageView fitHeight="18.0" fitWidth="16.0">
+                    <Image url="@../images/reminder.png"/>
+                </ImageView>
+            </graphic>
+           <padding>
+               <Insets bottom="10.0" left="15.0" right="15.0" top="10.0"/>
+           </padding>
+        </Button>
+    </HBox>
 
     <!-- Main content area -->
     <HBox fx:id="mainBody">
         <!-- Main panel for calendar and navigation -->
         <VBox fx:id="mainPanel">
             <padding>
-                <Insets top="25.0" right="40.0" bottom="25.0" left="40.0"/>
+                <Insets bottom="25.0" left="40.0" right="40.0" top="25.0" />
             </padding>
             <!-- Navigation bar with month label and buttons -->
-            <HBox alignment="BASELINE_LEFT" spacing="8.0">
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
                 <padding>
-                    <Insets bottom="25.0"/>
+                    <Insets bottom="25.0" />
                 </padding>
                 <!-- Month label -->
-                <Label fx:id="monthLabel" styleClass="inter-extrabold" text="MARCH 2025" textFill="WHITE"/>
+                <Label fx:id="monthLabel" styleClass="inter-extrabold" text="MARCH 2025" textFill="WHITE" />
                 <!-- Spacer to push buttons to the right -->
-                <Region HBox.hgrow="ALWAYS"/>
+                <Region HBox.hgrow="ALWAYS" />
 
                 <!-- Navigation buttons -->
-                <Button fx:id="prevMonthButton" alignment="CENTER" contentDisplay="TOP"
-                        onAction="#handlePrevMonth">
+                <Button fx:id="prevMonthButton" alignment="CENTER" contentDisplay="TOP" onAction="#handlePrevMonth">
                     <graphic>
                         <ImageView fitHeight="11" fitWidth="8">
-                            <Image url="@../images/back.png"/>
+                            <Image url="@../images/back.png" />
                         </ImageView>
                     </graphic>
                 </Button>
                 <Button fx:id="resetMonthButton" contentDisplay="TOP" onAction="#handleResetMonth">
                     <graphic>
                         <ImageView fitHeight="14" fitWidth="14">
-                            <Image url="@../images/current.png"/>
+                            <Image url="@../images/current.png" />
                         </ImageView>
                     </graphic>
                 </Button>
                 <Button fx:id="nextMonthButton" contentDisplay="TOP" onAction="#handleNextMonth">
                     <graphic>
                         <ImageView fitHeight="11" fitWidth="8">
-                            <Image url="@../images/forward.png"/>
+                            <Image url="@../images/forward.png" />
                         </ImageView>
                     </graphic>
                 </Button>
             </HBox>
 
             <!-- Calendar grid -->
-            <GridPane fx:id="calendar" styleClass="inter-extrabold" alignment="TOP_CENTER" hgap="8.0"
-                      vgap="8.0">
+            <GridPane fx:id="calendar" alignment="TOP_CENTER" hgap="8.0" styleClass="inter-extrabold" vgap="8.0">
                 <!-- Day of week headers -->
-                <Label fx:id="monLabel" styleClass="calendarHeader" alignment="CENTER" text="Mon"
-                       textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <Label fx:id="tueLabel" styleClass="calendarHeader" alignment="CENTER" text="Tue"
-                       textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Label fx:id="wedLabel" styleClass="calendarHeader" alignment="CENTER" text="Wed"
-                       textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <Label fx:id="thuLabel" styleClass="calendarHeader" alignment="CENTER" text="Thu"
-                       textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                <Label fx:id="friLabel" styleClass="calendarHeader" alignment="CENTER" text="Fri"
-                       textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-                <Label fx:id="satLabel" styleClass="calendarHeader" alignment="CENTER" text="Sat"
-                       textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
-                <Label fx:id="sunLabel" styleClass="calendarHeader" alignment="CENTER" text="Sun"
-                       textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
+                <Label fx:id="monLabel" alignment="CENTER" styleClass="calendarHeader" text="Mon" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="tueLabel" alignment="CENTER" styleClass="calendarHeader" text="Tue" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label fx:id="wedLabel" alignment="CENTER" styleClass="calendarHeader" text="Wed" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Label fx:id="thuLabel" alignment="CENTER" styleClass="calendarHeader" text="Thu" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                <Label fx:id="friLabel" alignment="CENTER" styleClass="calendarHeader" text="Fri" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                <Label fx:id="satLabel" alignment="CENTER" styleClass="calendarHeader" text="Sat" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+                <Label fx:id="sunLabel" alignment="CENTER" styleClass="calendarHeader" text="Sun" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="0" />
 
                 <!-- Grid constraints -->
                 <columnConstraints>
-                    <ColumnConstraints percentWidth="14.28"/>
-                    <ColumnConstraints percentWidth="14.28"/>
-                    <ColumnConstraints percentWidth="14.28"/>
-                    <ColumnConstraints percentWidth="14.28"/>
-                    <ColumnConstraints percentWidth="14.28"/>
-                    <ColumnConstraints percentWidth="14.28"/>
-                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28" />
+                    <ColumnConstraints percentWidth="14.28" />
+                    <ColumnConstraints percentWidth="14.28" />
+                    <ColumnConstraints percentWidth="14.28" />
+                    <ColumnConstraints percentWidth="14.28" />
+                    <ColumnConstraints percentWidth="14.28" />
+                    <ColumnConstraints percentWidth="14.28" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints/> <!-- Header row -->
-                    <RowConstraints maxHeight="8.0"/> <!-- Gap row -->
-                    <RowConstraints/> <!-- Date row 1 -->
-                    <RowConstraints/> <!-- Date row 2 -->
-                    <RowConstraints/> <!-- Date row 3 -->
-                    <RowConstraints/> <!-- Date row 4 -->
-                    <RowConstraints/> <!-- Date row 5 -->
-                    <RowConstraints/> <!-- Date row 6 -->
+                    <RowConstraints /> <!-- Header row -->
+                    <RowConstraints maxHeight="8.0" /> <!-- Gap row -->
+                    <RowConstraints /> <!-- Date row 1 -->
+                    <RowConstraints /> <!-- Date row 2 -->
+                    <RowConstraints /> <!-- Date row 3 -->
+                    <RowConstraints /> <!-- Date row 4 -->
+                    <RowConstraints /> <!-- Date row 5 -->
+                    <RowConstraints /> <!-- Date row 6 -->
                 </rowConstraints>
             </GridPane>
         </VBox>
 
         <!-- Side panel -->
-        <VBox fx:id="sidePanel"/>
+        <VBox fx:id="sidePanel" />
     </HBox>
 </VBox>
