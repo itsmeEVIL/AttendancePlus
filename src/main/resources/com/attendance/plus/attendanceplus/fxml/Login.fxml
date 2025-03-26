@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" style="-fx-background-color: rgb(18, 18, 19);" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.attendance.plus.attendanceplus.LoginController">
+    <!-- Title -->
+    <Label alignment="CENTER" style="-fx-font-size: 48px; -fx-text-fill: rgb(21, 133, 246);" styleClass="inter-extrabold" text="Attendance+" textFill="WHITE">
+        <padding>
+            <Insets bottom="40.0" />
+        </padding>
+      <font>
+         <Font size="38.0" />
+      </font>
+      <VBox.margin>
+         <Insets />
+      </VBox.margin>
+    </Label>
+
+    <!-- Login Form -->
+    <VBox alignment="CENTER" spacing="15.0">
+        <children>
+            <TextField fx:id="usernameField" promptText="Username">
+            <styleClass>
+               <String fx:value="login-field" />
+               <String fx:value="inter-semibold" />
+            </styleClass></TextField>
+            <PasswordField fx:id="passwordField" promptText="Password">
+            <styleClass>
+               <String fx:value="login-field" />
+               <String fx:value="inter-semibold" />
+            </styleClass></PasswordField>
+            <Button fx:id="loginButton" onAction="#handleLogin" text="Log In">
+            <styleClass>
+               <String fx:value="login-button" />
+               <String fx:value="inter-semibold" />
+            </styleClass>
+            <VBox.margin>
+               <Insets top="40.0" />
+            </VBox.margin></Button>
+        </children>
+        <padding>
+            <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+        </padding>
+    </VBox>
+</VBox>

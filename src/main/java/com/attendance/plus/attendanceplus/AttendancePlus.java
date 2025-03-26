@@ -17,9 +17,9 @@ public class AttendancePlus extends Application {
         Font.loadFont(getClass().getResourceAsStream("fonts/Inter-SemiBold.ttf"), 14);
 
         // Load the FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(AttendancePlus.class.getResource("fxml/Dashboard.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 980, 620);
-        stage.setTitle("Attendance+");
+        FXMLLoader fxmlLoader = new FXMLLoader(AttendancePlus.class.getResource("fxml/Login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 365, 620);
+        stage.setTitle("Attendance+ - Login");
         stage.setScene(scene);
         stage.show();
     }

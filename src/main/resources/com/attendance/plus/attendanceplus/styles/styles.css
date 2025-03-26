@@ -97,3 +97,26 @@
 #sidePanel {
     -fx-background-color: rgb(34, 35, 36);
 }
+
+/* Login screen styles */
+.login-field {
+    -fx-font-size: 16px;
+    -fx-background-color: rgb(37, 37, 37);
+    -fx-text-fill: #fff;
+    -fx-prompt-text-fill: #B5B5B5;
+    -fx-border-width: 0;
+    -fx-background-radius: 6px;
+    -fx-max-width: 340px;
+    -fx-padding: 10px;
+}
+
+.login-button {
+    -fx-font-size: 16px;
+    -fx-background-color: rgb(21, 133, 246);
+    -fx-text-fill: #fff;
+    -fx-border-width: 0;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-width: 340px;
+    -fx-padding: 10px;
+}
