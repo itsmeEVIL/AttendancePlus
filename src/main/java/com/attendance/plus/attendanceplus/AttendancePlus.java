@@ -2,8 +2,10 @@ package com.attendance.plus.attendanceplus;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +23,10 @@ public class AttendancePlus extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 365, 620);
         stage.setTitle("Attendance+ - Login");
         stage.setScene(scene);
+        // Center the stage manually
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((screenBounds.getWidth() - 365) / 2);
+        stage.setY((screenBounds.getHeight() - 620) / 2);
         stage.show();
     }
 

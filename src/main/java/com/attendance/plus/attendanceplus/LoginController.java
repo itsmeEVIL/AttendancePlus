@@ -2,11 +2,13 @@ package com.attendance.plus.attendanceplus;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,6 +39,11 @@ public class LoginController {
                 Scene dashboardScene = new Scene(dashboardRoot, 980, 620);
                 stage.setScene(dashboardScene);
                 stage.setTitle("Attendance+ - Dashboard");
+
+                // Center the stage manually
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                stage.setX((screenBounds.getWidth() - 980) / 2);
+                stage.setY((screenBounds.getHeight() - 620) / 2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
