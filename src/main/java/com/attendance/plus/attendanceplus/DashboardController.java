@@ -106,12 +106,16 @@ public class DashboardController {
     }
 
     /**
-     * Updates the reset button's style based on whether the current month is displayed.
+     * Updates the reset button's style based on whether the current month is displayed and today is selected.
      */
     private void updateResetButtonStyle() {
         resetMonthButton.getStyleClass().removeAll("nav-button-default", "nav-button-highlighted");
+        LocalDate today = LocalDate.now();
+        boolean isCurrentMonthAndTodaySelected = currentYearMonth.equals(YearMonth.now()) &&
+                selectedDate != null &&
+                selectedDate.equals(today);
         resetMonthButton.getStyleClass().add(
-                currentYearMonth.equals(YearMonth.now()) ? "nav-button-highlighted" : "nav-button-default"
+                isCurrentMonthAndTodaySelected ? "nav-button-highlighted" : "nav-button-default"
         );
     }
 
@@ -192,6 +196,7 @@ public class DashboardController {
         dayButton.getStyleClass().remove("calendarDayDefault");
         dayButton.getStyleClass().add("calendarDaySelected");
 
+        updateResetButtonStyle(); // Update reset button style after selection change
         logSelectedDate();
     }
 
@@ -225,6 +230,7 @@ public class DashboardController {
         selectedDate = LocalDate.now(); // Reset selected date to today
         updateMonthLabel();
         populateCalendar();
+        updateResetButtonStyle(); // Ensure reset button style reflects today being selected
         logSelectedDate(); // Log the new selected date
     }
 
