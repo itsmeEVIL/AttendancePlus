@@ -1,5 +1,6 @@
 package com.attendance.plus.attendanceplus;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,8 +35,25 @@ public class MainPanelController {
     public void initialize() {
         currentYearMonth = YearMonth.of(2025, 3); // Default starting month
         updateMonthLabel(); // Safe to call, doesn’t depend on dashboardController
+        bindHeaderLabels();
         // Do NOT call updateCalendar() here
         VBox.setVgrow(calendar, javafx.scene.layout.Priority.ALWAYS);
+    }
+
+
+    private void bindHeaderLabels() {
+        Label[] headers = {monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel};
+        for (Label header : headers) {
+            bindLabel(header);
+        }
+    }
+
+    /**
+     * Applies size bindings to a label.
+     */
+    private void bindLabel(Label label) {
+        label.prefWidthProperty().bind(calendar.widthProperty().divide(CALENDAR_COLS));
+        label.prefHeightProperty().bind(calendar.heightProperty().divide(CALENDAR_ROWS));
     }
 
     private void updateMonthLabel() {
