@@ -12,7 +12,20 @@ import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class MainPanelController {
+abstract  class CalendarUI{
+    abstract void updateCalendar();
+    abstract void updateMonthLabel();
+    abstract void clearCalendar();
+    abstract void updateResetButtonStyle();
+    abstract void handlePrevMonth();
+    abstract void handleNextMonth();
+    abstract void handleResetMonth();
+    abstract void bindHeaderLabels();
+    abstract void bindLabel(Label label);
+    abstract Button createDayButton(int day);
+}
+
+public class MainPanelController extends CalendarUI {
     @FXML private Label monthLabel;
     @FXML private Button prevMonthButton;
     @FXML private Button resetMonthButton;
@@ -41,7 +54,7 @@ public class MainPanelController {
     }
 
 
-    private void bindHeaderLabels() {
+    public void bindHeaderLabels() {
         Label[] headers = {monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel};
         for (Label header : headers) {
             bindLabel(header);
@@ -51,12 +64,12 @@ public class MainPanelController {
     /**
      * Applies size bindings to a label.
      */
-    private void bindLabel(Label label) {
+    public void bindLabel(Label label) {
         label.prefWidthProperty().bind(calendar.widthProperty().divide(CALENDAR_COLS));
         label.prefHeightProperty().bind(calendar.heightProperty().divide(CALENDAR_ROWS));
     }
 
-    private void updateMonthLabel() {
+    public void updateMonthLabel() {
         String monthName = currentYearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH).toUpperCase();
         monthLabel.setText(monthName + " " + currentYearMonth.getYear());
     }
@@ -85,7 +98,7 @@ public class MainPanelController {
         updateResetButtonStyle();
     }
 
-    private Button createDayButton(int day) {
+    public Button createDayButton(int day) {
         Button dayButton = new Button(String.valueOf(day));
         dayButton.prefWidthProperty().bind(calendar.widthProperty().divide(CALENDAR_COLS));
         dayButton.prefHeightProperty().bind(calendar.heightProperty().divide(CALENDAR_ROWS));
@@ -99,11 +112,11 @@ public class MainPanelController {
         return dayButton;
     }
 
-    private void clearCalendar() {
+    public void clearCalendar() {
         calendar.getChildren().removeIf(node -> GridPane.getRowIndex(node) >= FIRST_DATE_ROW);
     }
 
-    private void updateResetButtonStyle() {
+    public void updateResetButtonStyle() {
         resetMonthButton.getStyleClass().removeAll("nav-button-default", "nav-button-highlighted");
         boolean isCurrentMonthAndToday = currentYearMonth.equals(YearMonth.now()) &&
                 dashboardController.getSelectedDate().equals(LocalDate.now());
@@ -111,21 +124,21 @@ public class MainPanelController {
     }
 
     @FXML
-    private void handlePrevMonth() {
+    public void handlePrevMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
         updateMonthLabel();
         updateCalendar();
     }
 
     @FXML
-    private void handleNextMonth() {
+    public void handleNextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
         updateMonthLabel();
         updateCalendar();
     }
 
     @FXML
-    private void handleResetMonth() {
+    public void handleResetMonth() {
         currentYearMonth = YearMonth.now();
         dashboardController.setSelectedDate(LocalDate.now());
         updateMonthLabel();

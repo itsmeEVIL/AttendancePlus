@@ -6,7 +6,7 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
-public class DashboardController {
+public class DashboardController{
     @FXML private HBox topBar;
     @FXML private HBox mainBody;
     @FXML private VBox mainPanel;
